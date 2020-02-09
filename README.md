@@ -1,5 +1,8 @@
 # README
 
+link to see the website: https://usf-cs360-spring2020.github.io/homework1-alexziweiwang/
+
+
 <https://usf-cs360-spring2020.github.io/template-bulma/>
 
 ![Profile Image](profile.png)
