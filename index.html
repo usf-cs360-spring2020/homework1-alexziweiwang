@@ -9,6 +9,9 @@
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link href="style.css" rel="stylesheet">
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
 
     <!-- Load Font Awesome 5 (free) icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -27,6 +30,110 @@
     </div>
   </section>
   <!-- End page header -->
+
+
+  <!-- TODO temp put csv files there-->
+  <script>
+    let csv = 'Affordability_Wide_2019Q3_Public.csv';
+    // configuration of svg/plot area
+let config = {
+  'svg': {},
+  'margin': {},
+  'plot': {}
+};
+config.svg.height = 450;
+config.svg.width = config.svg.height * 1.618; // golden ratio
+
+config.margin.top = 10;
+config.margin.right = 10;
+config.margin.bottom = 20;
+config.margin.left = 80;
+
+config.plot.x = config.margin.left;
+config.plot.y = config.margin.top;
+config.plot.width = config.svg.width - config.margin.left - config.margin.right;
+config.plot.height = config.svg.height - config.margin.top - config.margin.bottom;
+
+// setup svg
+let svg = d3.select('body').select('svg');
+svg.attr('width', config.svg.width);
+svg.attr('height', config.svg.height);
+
+// setup plot area
+let plot = svg.append('g');
+plot.attr('id', 'plot');
+plot.attr('transform', translate(config.plot.x, config.plot.y));
+
+// use a rect to illustrate plot area
+let rect = plot.append('rect');
+rect.attr('id', 'background');
+
+rect.attr('x', 0);
+rect.attr('y', 0);
+rect.attr('width', config.plot.width);
+rect.attr('height', config.plot.height);
+
+// scales for data
+let scale = {};
+
+scale.x = d3.scaleBand();
+scale.x.range([0, config.plot.width]);
+
+scale.y = d3.scaleBand();
+scale.y.range([config.plot.height, 0]);
+
+// https://github.com/d3/d3-scale-chromatic
+scale.color = d3.scaleSequential(d3.interpolateViridis);
+
+let axis = {};  // axes for data
+axis.x = d3.axisBottom(scale.x);
+axis.x.tickPadding(0);
+
+axis.y = d3.axisLeft(scale.y);
+axis.y.tickPadding(0);
+
+// format the tick labels
+axis.x.tickFormat(dateFormatter);
+axis.y.tickFormat(regionFormatter);
+
+// load data
+// https://github.com/d3/d3-fetch/blob/master/README.md#csv
+d3.csv(csv, convertRow).then(drawHeatmap);
+
+// function to convert column names into date
+// try: parseColumnName('1979-12');
+let parseColumnName = d3.timeParse('%Y-%m');
+
+
+
+//TODO 1
+function drawHeatmap(data) {
+ console.log(data);
+  console.log(data[0]);
+
+  // equivalent ways to access object properties
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects
+  console.log(data[0]['values'][0]);
+  console.log(data[0].values[0]);
+
+  // lets reduce data size to biggest regions
+  // the number of rows to keep
+  let keep = 30;
+
+  // filter dataset to smaller size
+  data = data.filter(function(row) {
+    return row['Index'] === 'Rent Affordability' &&
+           row['SizeRank'] > 0 &&   // excludes United States
+           row['SizeRank'] <= keep;
+  }); //TODO 1/
+
+
+
+
+  </script>
+
+
+
 
   <!-- Page navigation -->
   <!-- https://bulma.io/documentation/components/navbar/ -->
@@ -296,17 +403,16 @@ You can even put code into these pre blocks.
 
           <div class="media-content">
             <div class="content">
-              <!-- TODO: Replace with contact information -->
+
               <p>
-                <strong>Full Name</strong><br/>
+                <strong>Alex (Ziwei) Wang</strong><br/>
                 CS Major, <a href="https://www.usfca.edu/">University of San Francisco</a><br/>
-                <em>Expected Graduation: 20??</em><br/>
+                <em>Expected Graduation: December 2020</em><br/>
                 <i class="fas fa-envelope"></i> <a href="mailto:username@dons.usfca.edu">username@dons.usfca.edu</a>
               </p>
 
-              <!-- TODO: Replace with brief biography -->
               <p>
-                Here is a brief bio about yourself. A good rule of thumb is to include at least one technical tidbit (favorite area or course within computer science), and one fun tidbit (such as loving dogs).
+                About myself: Interested in Data visualization, Game development, Brain-Computer Interaction and more. A Slytherin. Someone who dedicated to using technology to bring more convenience, safety and peace to the world.
               </p>
 
               <!-- TODO: Replace or remove tags -->
