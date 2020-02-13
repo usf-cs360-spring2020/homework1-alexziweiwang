@@ -4,14 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Homework 1 by Alex Wang</title>
+    <title>homework1 by Alex Wang</title>
 
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <link href="style.css" rel="stylesheet">
-
-    <script src="https://d3js.org/d3.v5.min.js"></script>
 
     <!-- Load Font Awesome 5 (free) icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -24,116 +21,12 @@
   <section class="hero is-primary is-bold">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">Homework1: Air Traffic Passenger Statistics</h1>
-        <h2 class="subtitle">for CS360 Data Visualization Course; by Alex Wang</h2>
+        <h1 class="title">homework1: Data Visualization of Air Traffic Passenger Statistics</h1>
+        <h2 class="subtitle">using Tableau and D3.js</h2>
       </div>
     </div>
   </section>
   <!-- End page header -->
-
-
-  <!-- TODO temp put csv files there-->
-  <script>
-    let csv = 'Affordability_Wide_2019Q3_Public.csv';
-    // configuration of svg/plot area
-let config = {
-  'svg': {},
-  'margin': {},
-  'plot': {}
-};
-config.svg.height = 450;
-config.svg.width = config.svg.height * 1.618; // golden ratio
-
-config.margin.top = 10;
-config.margin.right = 10;
-config.margin.bottom = 20;
-config.margin.left = 80;
-
-config.plot.x = config.margin.left;
-config.plot.y = config.margin.top;
-config.plot.width = config.svg.width - config.margin.left - config.margin.right;
-config.plot.height = config.svg.height - config.margin.top - config.margin.bottom;
-
-// setup svg
-let svg = d3.select('body').select('svg');
-svg.attr('width', config.svg.width);
-svg.attr('height', config.svg.height);
-
-// setup plot area
-let plot = svg.append('g');
-plot.attr('id', 'plot');
-plot.attr('transform', translate(config.plot.x, config.plot.y));
-
-// use a rect to illustrate plot area
-let rect = plot.append('rect');
-rect.attr('id', 'background');
-
-rect.attr('x', 0);
-rect.attr('y', 0);
-rect.attr('width', config.plot.width);
-rect.attr('height', config.plot.height);
-
-// scales for data
-let scale = {};
-
-scale.x = d3.scaleBand();
-scale.x.range([0, config.plot.width]);
-
-scale.y = d3.scaleBand();
-scale.y.range([config.plot.height, 0]);
-
-// https://github.com/d3/d3-scale-chromatic
-scale.color = d3.scaleSequential(d3.interpolateViridis);
-
-let axis = {};  // axes for data
-axis.x = d3.axisBottom(scale.x);
-axis.x.tickPadding(0);
-
-axis.y = d3.axisLeft(scale.y);
-axis.y.tickPadding(0);
-
-// format the tick labels
-axis.x.tickFormat(dateFormatter);
-axis.y.tickFormat(regionFormatter);
-
-// load data
-// https://github.com/d3/d3-fetch/blob/master/README.md#csv
-d3.csv(csv, convertRow).then(drawHeatmap);
-
-// function to convert column names into date
-// try: parseColumnName('1979-12');
-let parseColumnName = d3.timeParse('%Y-%m');
-
-
-
-//TODO 1
-function drawHeatmap(data) {
- console.log(data);
-  console.log(data[0]);
-
-  // equivalent ways to access object properties
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects
-  console.log(data[0]['values'][0]);
-  console.log(data[0].values[0]);
-
-  // lets reduce data size to biggest regions
-  // the number of rows to keep
-  let keep = 30;
-
-  // filter dataset to smaller size
-  data = data.filter(function(row) {
-    return row['Index'] === 'Rent Affordability' &&
-           row['SizeRank'] > 0 &&   // excludes United States
-           row['SizeRank'] <= keep;
-  }); //TODO 1/
-
-
-
-
-  </script>
-
-
-
 
   <!-- Page navigation -->
   <!-- https://bulma.io/documentation/components/navbar/ -->
@@ -216,16 +109,18 @@ function drawHeatmap(data) {
       <div class="content">
         <h1 class="title">
           <!-- TODO: Change page title -->
-          Page Title
+          Air Traffic Passenger Statistics
         </h1>
         <p class="subtitle">
           <!-- TODO: Change page subtitle -->
           Page Subtitle
         </p>
-
+<!-- TODO: Change -->
         <p>This would be an excellent place to describe what this page is for, what to find in different sections, describe any motivation or theme behind your visualizations, and so on.</p>
 
         <p>You should not use this template unless you intend to customize it. Make it your own. Keep in mind this simple template is over 300 lines! You can see other examples of websites using Bulma at their showcase: <a href="https://bulma.io/expo/">bulma.io/expo/</a>.</p>
+<!-- TODO: Change -->
+
 
         <h2 id="data">Data</h2>
 
@@ -273,34 +168,31 @@ You can even put code into these pre blocks.
         <p>For now this is just a demo. The buttons below do not go anywhere, but can be easily changed to link to different visualization pages.</p>
 
         <p class="buttons">
-          <a class="button is-large is-success" href="#">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-line"></i>
-            </span>
-            <span>Line Chart</span>
-          </a>
-
-          <a class="button is-large is-primary" href="#">
+          <button class="button is-large is-primary" href="#" id="area" onclick="document.getElementById('imageSlot').src='360hw1-graph1-region2.png'">
             <span class="icon is-medium">
               <i class="fas fa-chart-area"></i>
             </span>
             <span>Area Chart</span>
-          </a>
+          </button>
 
-          <a class="button is-large is-info" href="#">
+          <button class="button is-large is-info" href="#" id="bar1" onclick="document.getElementById('imageSlot').src='360hw1-graph2.8w-airlines2.png'">
             <span class="icon is-medium">
               <i class="fas fa-chart-bar"></i>
             </span>
-            <span>Bar Chart</span>
-          </a>
+            <span>Bar Chart 1</span>
+          </button>
 
-          <a class="button is-large is-link" href="#">
+          <button class="button is-large is-link" href="#" id="bar2" onclick="document.getElementById('imageSlot').src='360hw1-graph5-actTypeTerminals5.png'">
             <span class="icon is-medium">
-              <i class="fas fa-chart-pie"></i>
+              <i class="fas fa-chart-bar"></i>
             </span>
-            <span>Pie Chart</span>
-          </a>
+            <span>Bar Chart 2</span>
+          </button>
+
         </p>
+        <img id="imageSlot"/>
+
+
 
         <!-- https://github.com/vega/vega-embed#basic-example -->
         <p>It is possible to embed some visualizations directly here too. Here is <a href="https://github.com/vega/vega-embed#basic-example">an example</a> using Vega-Lite:</p>
@@ -317,11 +209,6 @@ You can even put code into these pre blocks.
           // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         }).catch(console.error);
         </script>
-
-
-        <p class="image is-960x500"><img class="" src="360hw1-graph5-actTypeTerminals5.png"></p>
-<!--TODO: MY DATA VISUALIZATION -->
-
 
         <h4>Instructions</h4>
 
@@ -396,33 +283,36 @@ You can even put code into these pre blocks.
         <!-- Profile box -->
         <!-- https://bulma.io/documentation/layout/media-object/ -->
         <article class="media">
-          <!-- TODO: Replace with profile photo -->
           <figure class="media-left">
-            <p class="image is-128x128"><img class="is-rounded" src="profile.png"></p>
+            <p class="image is-128x128"><img class="is-rounded" src="aw5.png"></p>
           </figure>
 
           <div class="media-content">
             <div class="content">
 
               <p>
-                <strong>Alex (Ziwei) Wang</strong><br/>
+                <strong>Alex(Ziwei) Wang</strong><br/>
                 CS Major, <a href="https://www.usfca.edu/">University of San Francisco</a><br/>
                 <em>Expected Graduation: December 2020</em><br/>
-                <i class="fas fa-envelope"></i> <a href="mailto:username@dons.usfca.edu">username@dons.usfca.edu</a>
+                <i class="fas fa-envelope"></i> <a href="mailto:username@dons.usfca.edu">zwang114@dons.usfca.edu</a>
               </p>
 
               <p>
-                About myself: Interested in Data visualization, Game development, Brain-Computer Interaction and more. A Slytherin. Someone who dedicated to using technology to bring more convenience, safety and peace to the world.
+              Interested in Data visualization, Brain-Computer Interaction, Game development, and more.
+              Dedicated to using technology to bring more convenience, safety and peace to the world. A Slytherin.
               </p>
 
-              <!-- TODO: Replace or remove tags -->
               <!-- https://bulma.io/documentation/elements/tag/ -->
               <div class="heading">Skills</div>
 
               <div class="tags">
-                <span class="tag">Python</span>
                 <span class="tag">C</span>
                 <span class="tag">Java</span>
+                <span class="tag">Python</span>
+                <span class="tag">Android development</span>
+                <span class="tag">R</span>
+                <span class="tag">Unity</span>
+                <span class="tag">Assembly</span>
                 <span class="tag">JavaScript</span>
                 <span class="tag">HTML</span>
                 <span class="tag">CSS</span>
