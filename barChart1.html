@@ -161,41 +161,7 @@ You can even put code into these pre blocks.
 
         <h2 id="visualizations">Visualizations</h2>
 
-        <p>Ideally not everything would be on a single page like this example. Instead, you might want to put each section in its own webpage. You would need to carefully replicate the page template (with the header, navbar, and footer) and make the necessary updates. For example, you want the "About" navbar item to be considered active on an "About" web page.</p>
 
-        <p>For now this is just a demo. The buttons below do not go anywhere, but can be easily changed to link to different visualization pages.</p>
-
-        <p class="buttons">
-          <a class="button is-large is-success" href="#">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-line"></i>
-            </span>
-            <span>Line Chart</span>
-          </a>
-
-          <a class="button is-large is-primary" href="#">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-area"></i>
-            </span>
-            <span>Area Chart</span>
-          </a>
-
-          <a class="button is-large is-info" href="#">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-bar"></i>
-            </span>
-            <span>Bar Chart</span>
-          </a>
-
-          <a class="button is-large is-link" href="#">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-pie"></i>
-            </span>
-            <span>Pie Chart</span>
-          </a>
-        </p>
-
-        <!--TODO : d3part here! --> <!--TODO : d3part here! --> <!--TODO : d3part here! --> <!--TODO : d3part here! -->
         <!-- Load d3.js -->
         <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -219,6 +185,10 @@ You can even put code into these pre blocks.
             .attr("transform",
                   "translate(" + margin.left + "," + margin.top + ")");
 
+
+
+
+
         // Parse the Data
         d3.csv("ATPS-gn1-acj.csv", function(data) {
 
@@ -228,23 +198,31 @@ You can even put code into these pre blocks.
           });
 
 
+
+
+
           // Add X axis
           var x = d3.scaleLinear()
             .domain([0, 50000])
             .range([ 0, width]);
+
+
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x))
             .selectAll("text")
               .style("text-anchor", "end");
 
+
+
           // Y axis
-          var y = d3.scaleBand()
+         var y = d3.scaleBand()
             .range([ 0, height ])
             .domain(data.map(function(d) { return d.OperatingAirline; }))
             .padding(.05);
           svg.append("g")
             .call(d3.axisLeft(y))
+
 
           //Bars
           svg.selectAll("myRect")
@@ -255,12 +233,10 @@ You can even put code into these pre blocks.
             .attr("y", function(d) { return y(d.OperatingAirline); })
             .attr("width", function(d) { return x(d.PassengerCount); })
             .attr("height", y.bandwidth() - 20 )
-            .attr("fill", "#4182CA")
+            .attr("fill", "#1C6995");
         })
 
         </script>
-
-
 
         <h4>Instructions</h4>
 

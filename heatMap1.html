@@ -157,18 +157,138 @@ You can even put code into these pre blocks.
         <p>You can alternatively embed a Gist if you want. There is an "embed" button on <a href="https://gist.github.com/octocat/6cad326836d38bd3a7ae">the Gist page</a> and results in something like this:</p>
 
         <h2 id="visualizations">Visualizations</h2>
+        <meta charset="utf-8">
         <script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.js"></script>
         <div id="d3pheat1"></div>
 
 
 
-
-        </script>
-
+        <script>
 
 
 
-        <h4>Instructions</h4>
+
+        var margin = {top: 30, right: 30, bottom: 30, left: 100},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+          var svg = d3.select("#d3pheat1")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+          var regionArr=[];
+          var timeArr=[];
+
+          let config = {
+            'svg': {},
+            'margin': {},
+            'plot': {}
+          };
+
+
+          let scale = {};
+
+          scale.x = d3.scaleBand();
+          scale.x.range([0, width]);
+
+          scale.y = d3.scaleBand();
+          scale.y.range([height, 0]);
+
+          // https://github.com/d3/d3-scale-chromatic
+          scale.color = d3.scaleSequential(d3.interpolateGnBu);
+
+          var colors = d3.scaleSequential(d3.interpolateGnBu);
+
+          let axis = {};
+          axis.x = d3.axisBottom(scale.x);
+          axis.x.tickPadding(0);
+
+          axis.y = d3.axisLeft(scale.y);
+          axis.y.tickPadding(0);
+
+
+          d3.csv("ATPS-gn2-rmc.csv",function(data){
+
+                      let sortRow = 'GEORegion';
+                      data = data.sort(function(a, b) {
+                        return d3.descending(a[sortRow], b[sortRow]);
+                      });
+
+                      let sortColumn = 'ActivityPeriod';
+                      data = data.sort(function(a, b) {
+                        return d3.ascending(a[sortColumn], b[sortColumn]);
+                      });
+
+                      let regions = data.map(row => row['GEORegion']);
+                      console.log(regions);
+
+                      let dates = data.map(row => row['ActivityPeriod']);
+                      console.log(dates);
+
+                      let pCount = data.map(row => row['PassengerCount']);
+                      console.log(pCount);
+
+                      scale.x.domain(dates);
+                      scale.y.domain(regions);
+
+                      // draw the x and y axis
+                      let gx = svg.append("g");
+                      gx.attr("id", "x-axis");
+                      gx.attr("class", "axis");
+                      gx.call(axis.x);
+
+                      let gy = svg.append("g");
+                      gy.attr("id", "y-axis");
+                      gy.attr("class", "axis");
+                      gy.call(axis.y);
+
+
+                      // get all of the value objects (with date and value) from the rows
+                      let values = data.map(d => d.PassengerCount);
+
+                      // combine all of the individual object arrays into one
+                      let merged = d3.merge(values);
+
+                      // get only the value part of the objects
+                      let mapped = merged.map(d => d.PassengerCount);
+
+                      console.log("111");
+
+                      svg.selectAll()
+
+                            .enter()
+                            .append("rect")
+                            .attr("x", function(d) { return x(d.ActivityPeriod) })
+                            .attr("y", function(d) { return y(d.GEORegion) })
+                            .attr("width", x.bandwidth() )
+                            .attr("height", y.bandwidth() )
+                            .style("fill", function(d) { return myColor(d/PassengerCount)} )
+
+          });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+<h4>Instructions</h4>
 
         <p>You will likely need to include instructions on how to interpet and use the visualization. In the case above, if you click the three dots <i class="fas fa-ellipsis-h has-text-grey-light	"></i> above it will open a menu where you can either save the visualization to a SVG or PNG, or alternatively open it up in the online Vega Editor.</p>
 
