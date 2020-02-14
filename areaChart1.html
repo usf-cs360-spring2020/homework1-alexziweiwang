@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>homework1 by Alex Wang</title>
+
+    <title>Area Chart</title>
 
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
@@ -21,12 +22,14 @@
   <section class="hero is-primary is-bold">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">homework1: Data Visualization of Air Traffic Passenger Statistics</h1>
-        <h2 class="subtitle">using Tableau and D3.js</h2>
+        <h1 class="title">Area Chart</h1>
+        <!-- TODO: Change subtitle -->
+        <h2 class="subtitle">Website Subtitle</h2>
       </div>
     </div>
   </section>
   <!-- End page header -->
+
   <!-- Page navigation -->
   <!-- https://bulma.io/documentation/components/navbar/ -->
   <nav class="navbar is-light" role="navigation" aria-label="main navigation">
@@ -98,27 +101,22 @@
   </nav>
   <!-- End page navigation -->
 
-
-
-
   <section class="section">
     <div class="container">
       <!-- Begin page content -->
       <div class="content">
         <h1 class="title">
           <!-- TODO: Change page title -->
-          Air Traffic Passenger Statistics
+          Page Title
         </h1>
         <p class="subtitle">
           <!-- TODO: Change page subtitle -->
           Page Subtitle
         </p>
-<!-- TODO: Change -->
+
         <p>This would be an excellent place to describe what this page is for, what to find in different sections, describe any motivation or theme behind your visualizations, and so on.</p>
 
         <p>You should not use this template unless you intend to customize it. Make it your own. Keep in mind this simple template is over 300 lines! You can see other examples of websites using Bulma at their showcase: <a href="https://bulma.io/expo/">bulma.io/expo/</a>.</p>
-<!-- TODO: Change -->
-
 
         <h2 id="data">Data</h2>
 
@@ -157,27 +155,89 @@ You can even put code into these pre blocks.
 
         <p>You can alternatively embed a Gist if you want. There is an "embed" button on <a href="https://gist.github.com/octocat/6cad326836d38bd3a7ae">the Gist page</a> and results in something like this:</p>
 
-        <script src="https://gist.github.com/octocat/6cad326836d38bd3a7ae.js"></script>
 
         <h2 id="visualizations">Visualizations</h2>
 
-        <p class="buttons">
 
 
-          <button class="button is-large is-info" onclick="window.location.href = 'barChart1.html';">
-            <span>Bar Chart</span>
-          </button>
+
+        <script src="https://d3js.org/d3.v4.js"></script>
 
 
-          <button class="button is-large is-info" href="#" id="area" onclick="window.location.href = 'heatMap1.html';">
-            <span>Heat Map</span>
-          </button>
+        <div id="d3area1"></div>
 
-          <button class="button is-large is-info" href="#" id="bar2" onclick="window.location.href = 'areaChart1.html';">
-            <span>Area Chart</span>
-          </button>
+        <script>
 
-        </p>
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#d3area1")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+//Read the data
+d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
+
+  // When reading the csv, I must format variables:
+  function(d){
+    return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
+  },
+
+  // Now I can use this dataset:
+  function(data) {
+
+    // Add X axis --> it is a date format
+    var x = d3.scaleTime()
+      .domain(d3.extent(data, function(d) { return d.date; }))
+      .range([ 0, width ]);
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+    // Add Y axis
+    var y = d3.scaleLinear()
+      .domain([0, d3.max(data, function(d) { return +d.value; })])
+      .range([ height, 0 ]);
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    // Add the area
+    svg.append("path")
+      .datum(data)
+      .attr("fill", "#cce5df")
+      .attr("stroke", "#69b3a2")
+      .attr("stroke-width", 1.5)
+      .attr("d", d3.area()
+        .x(function(d) { return x(d.date) })
+        .y0(y(0))
+        .y1(function(d) { return y(d.value) })
+        )
+
+})
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <h4>Instructions</h4>
 
@@ -186,13 +246,6 @@ You can even put code into these pre blocks.
         <h4>Discussion</h4>
 
         <p>You may also need other sections, like a discussion section, per-visualization section on data wrangling, and others. Because of the extra content and code visualizations take, it might be worthwhile to break up your pages into one home page and then one page per visualization.</p>
-
-
-
-
-
-
-
 
         <span class="heading">Acknowledgements</span>
 
@@ -205,104 +258,6 @@ You can even put code into these pre blocks.
           <em>Thanks to Person Name for their suggestion to do something with the visualization.</em>
         </p>
 
-        <h2 id="grade">Grade</h2>
-
-        <!-- TODO: Remove custom style if no longer needed -->
-        <style>
-          table.grades tbody tr td:nth-child(1),
-          table.grades tbody tr td:nth-child(2) {
-            text-align: center;
-          }
-        </style>
-
-        <!-- TODO: Change or remove table -->
-        <!-- https://bulma.io/documentation/elements/table/ -->
-        <table class="table is-hoverable is-bordered grades">
-          <thead>
-            <tr>
-              <th>Letter</th>
-              <th>Done?</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>D</td>
-              <td><i class="has-text-success fas fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied. Exactly how this section should look will depend on the assignment in question. There is no requirement for formatting in this way. This is just an example of what a table element might look like for this informaiton.</td>
-            </tr>
-
-            <tr>
-              <td>C</td>
-              <td><i class="has-text-success fas fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied.</td>
-            </tr>
-
-            <tr>
-              <td>B</td>
-              <td><i class="has-text-warning far fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied.</td>
-            </tr>
-
-            <tr>
-              <td>A</td>
-              <td><i class="has-text-danger fas fa-times-circle"></i></td>
-              <td>Discussion of how this grade level was not satisfied.</td>
-            </tr>
-          </tbody>
-
-        </table>
-
-        <h2 id="about">About</h2>
-
-        <!-- Profile box -->
-        <!-- https://bulma.io/documentation/layout/media-object/ -->
-        <article class="media">
-          <figure class="media-left">
-            <p class="image is-128x128"><img class="is-rounded" src="aw5.png"></p>
-          </figure>
-
-          <div class="media-content">
-            <div class="content">
-
-              <p>
-                <strong>Alex(Ziwei) Wang</strong><br/>
-                CS Major, <a href="https://www.usfca.edu/">University of San Francisco</a><br/>
-                <em>Expected Graduation: December 2020</em><br/>
-                <i class="fas fa-envelope"></i> <a href="mailto:username@dons.usfca.edu">zwang114@dons.usfca.edu</a>
-              </p>
-
-              <p>
-              Interested in Data visualization, Brain-Computer Interaction, Game development, and more.
-              Dedicated to using technology to bring more convenience, safety and peace to the world. A Slytherin.
-              </p>
-
-              <!-- https://bulma.io/documentation/elements/tag/ -->
-              <div class="heading">Skills</div>
-
-              <div class="tags">
-                <span class="tag">C</span>
-                <span class="tag">Java</span>
-                <span class="tag">Python</span>
-                <span class="tag">Android development</span>
-                <span class="tag">R</span>
-                <span class="tag">Unity</span>
-                <span class="tag">Assembly</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-                <span class="tag">SVG</span>
-              </div>
-            </div>
-          </div>
-        </article>
-        <!-- End profile box -->
-
-      </div>
-      <!-- End page content -->
-    </div>
-  </section>
 
   <!-- Page footer -->
   <!-- https://bulma.io/documentation/layout/footer/ -->

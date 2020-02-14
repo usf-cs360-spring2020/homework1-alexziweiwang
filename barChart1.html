@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>homework1 by Alex Wang</title>
+
+    <title>Bar Chart: Airlines in June 2019</title>
 
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
@@ -21,12 +22,14 @@
   <section class="hero is-primary is-bold">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">homework1: Data Visualization of Air Traffic Passenger Statistics</h1>
-        <h2 class="subtitle">using Tableau and D3.js</h2>
+        <h1 class="title">Bar Chart: Passenger Count in June 2019 for airlines held most passengers</h1>
+        <!-- TODO: Change subtitle -->
+        <h2 class="subtitle">Website Subtitle</h2>
       </div>
     </div>
   </section>
   <!-- End page header -->
+
   <!-- Page navigation -->
   <!-- https://bulma.io/documentation/components/navbar/ -->
   <nav class="navbar is-light" role="navigation" aria-label="main navigation">
@@ -60,6 +63,7 @@
               Visualizations
             </a>
 
+
             <div class="navbar-dropdown">
 
               <a class="navbar-item" href="barChart1.html">
@@ -77,6 +81,7 @@
 
 
             </div>
+
           </div>
         </div>
 
@@ -98,27 +103,22 @@
   </nav>
   <!-- End page navigation -->
 
-
-
-
   <section class="section">
     <div class="container">
       <!-- Begin page content -->
       <div class="content">
         <h1 class="title">
           <!-- TODO: Change page title -->
-          Air Traffic Passenger Statistics
+          Page Title
         </h1>
         <p class="subtitle">
           <!-- TODO: Change page subtitle -->
           Page Subtitle
         </p>
-<!-- TODO: Change -->
+
         <p>This would be an excellent place to describe what this page is for, what to find in different sections, describe any motivation or theme behind your visualizations, and so on.</p>
 
         <p>You should not use this template unless you intend to customize it. Make it your own. Keep in mind this simple template is over 300 lines! You can see other examples of websites using Bulma at their showcase: <a href="https://bulma.io/expo/">bulma.io/expo/</a>.</p>
-<!-- TODO: Change -->
-
 
         <h2 id="data">Data</h2>
 
@@ -161,23 +161,106 @@ You can even put code into these pre blocks.
 
         <h2 id="visualizations">Visualizations</h2>
 
+        <p>Ideally not everything would be on a single page like this example. Instead, you might want to put each section in its own webpage. You would need to carefully replicate the page template (with the header, navbar, and footer) and make the necessary updates. For example, you want the "About" navbar item to be considered active on an "About" web page.</p>
+
+        <p>For now this is just a demo. The buttons below do not go anywhere, but can be easily changed to link to different visualization pages.</p>
+
         <p class="buttons">
+          <a class="button is-large is-success" href="#">
+            <span class="icon is-medium">
+              <i class="fas fa-chart-line"></i>
+            </span>
+            <span>Line Chart</span>
+          </a>
 
-
-          <button class="button is-large is-info" onclick="window.location.href = 'barChart1.html';">
-            <span>Bar Chart</span>
-          </button>
-
-
-          <button class="button is-large is-info" href="#" id="area" onclick="window.location.href = 'heatMap1.html';">
-            <span>Heat Map</span>
-          </button>
-
-          <button class="button is-large is-info" href="#" id="bar2" onclick="window.location.href = 'areaChart1.html';">
+          <a class="button is-large is-primary" href="#">
+            <span class="icon is-medium">
+              <i class="fas fa-chart-area"></i>
+            </span>
             <span>Area Chart</span>
-          </button>
+          </a>
 
+          <a class="button is-large is-info" href="#">
+            <span class="icon is-medium">
+              <i class="fas fa-chart-bar"></i>
+            </span>
+            <span>Bar Chart</span>
+          </a>
+
+          <a class="button is-large is-link" href="#">
+            <span class="icon is-medium">
+              <i class="fas fa-chart-pie"></i>
+            </span>
+            <span>Pie Chart</span>
+          </a>
         </p>
+
+        <!--TODO : d3part here! --> <!--TODO : d3part here! --> <!--TODO : d3part here! --> <!--TODO : d3part here! -->
+        <!-- Load d3.js -->
+        <script src="https://d3js.org/d3.v4.js"></script>
+
+        <!-- Create a div where the graph will take place -->
+        <div id="d3bar1"></div>
+
+        <script>
+
+
+        // set the dimensions and margins of the graph
+        var margin = {top: 20, right: 30, bottom: 40, left: 120},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        var svg = d3.select("#d3bar1")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+
+        // Parse the Data
+        d3.csv("ATPS-gn1-acj.csv", function(data) {
+
+          let sortColumn = 'OperatingAirline';
+          data = data.sort(function(a, b) {
+            return d3.ascending(a[sortColumn], b[sortColumn]);
+          });
+
+
+          // Add X axis
+          var x = d3.scaleLinear()
+            .domain([0, 50000])
+            .range([ 0, width]);
+          svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+              .style("text-anchor", "end");
+
+          // Y axis
+          var y = d3.scaleBand()
+            .range([ 0, height ])
+            .domain(data.map(function(d) { return d.OperatingAirline; }))
+            .padding(.05);
+          svg.append("g")
+            .call(d3.axisLeft(y))
+
+          //Bars
+          svg.selectAll("myRect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", x(0) + 1.1 )
+            .attr("y", function(d) { return y(d.OperatingAirline); })
+            .attr("width", function(d) { return x(d.PassengerCount); })
+            .attr("height", y.bandwidth() - 20 )
+            .attr("fill", "#4182CA")
+        })
+
+        </script>
+
+
 
         <h4>Instructions</h4>
 
@@ -186,13 +269,6 @@ You can even put code into these pre blocks.
         <h4>Discussion</h4>
 
         <p>You may also need other sections, like a discussion section, per-visualization section on data wrangling, and others. Because of the extra content and code visualizations take, it might be worthwhile to break up your pages into one home page and then one page per visualization.</p>
-
-
-
-
-
-
-
 
         <span class="heading">Acknowledgements</span>
 
@@ -205,104 +281,6 @@ You can even put code into these pre blocks.
           <em>Thanks to Person Name for their suggestion to do something with the visualization.</em>
         </p>
 
-        <h2 id="grade">Grade</h2>
-
-        <!-- TODO: Remove custom style if no longer needed -->
-        <style>
-          table.grades tbody tr td:nth-child(1),
-          table.grades tbody tr td:nth-child(2) {
-            text-align: center;
-          }
-        </style>
-
-        <!-- TODO: Change or remove table -->
-        <!-- https://bulma.io/documentation/elements/table/ -->
-        <table class="table is-hoverable is-bordered grades">
-          <thead>
-            <tr>
-              <th>Letter</th>
-              <th>Done?</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>D</td>
-              <td><i class="has-text-success fas fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied. Exactly how this section should look will depend on the assignment in question. There is no requirement for formatting in this way. This is just an example of what a table element might look like for this informaiton.</td>
-            </tr>
-
-            <tr>
-              <td>C</td>
-              <td><i class="has-text-success fas fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied.</td>
-            </tr>
-
-            <tr>
-              <td>B</td>
-              <td><i class="has-text-warning far fa-check-circle"></i></td>
-              <td>Discussion of how this grade level was satisfied.</td>
-            </tr>
-
-            <tr>
-              <td>A</td>
-              <td><i class="has-text-danger fas fa-times-circle"></i></td>
-              <td>Discussion of how this grade level was not satisfied.</td>
-            </tr>
-          </tbody>
-
-        </table>
-
-        <h2 id="about">About</h2>
-
-        <!-- Profile box -->
-        <!-- https://bulma.io/documentation/layout/media-object/ -->
-        <article class="media">
-          <figure class="media-left">
-            <p class="image is-128x128"><img class="is-rounded" src="aw5.png"></p>
-          </figure>
-
-          <div class="media-content">
-            <div class="content">
-
-              <p>
-                <strong>Alex(Ziwei) Wang</strong><br/>
-                CS Major, <a href="https://www.usfca.edu/">University of San Francisco</a><br/>
-                <em>Expected Graduation: December 2020</em><br/>
-                <i class="fas fa-envelope"></i> <a href="mailto:username@dons.usfca.edu">zwang114@dons.usfca.edu</a>
-              </p>
-
-              <p>
-              Interested in Data visualization, Brain-Computer Interaction, Game development, and more.
-              Dedicated to using technology to bring more convenience, safety and peace to the world. A Slytherin.
-              </p>
-
-              <!-- https://bulma.io/documentation/elements/tag/ -->
-              <div class="heading">Skills</div>
-
-              <div class="tags">
-                <span class="tag">C</span>
-                <span class="tag">Java</span>
-                <span class="tag">Python</span>
-                <span class="tag">Android development</span>
-                <span class="tag">R</span>
-                <span class="tag">Unity</span>
-                <span class="tag">Assembly</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-                <span class="tag">SVG</span>
-              </div>
-            </div>
-          </div>
-        </article>
-        <!-- End profile box -->
-
-      </div>
-      <!-- End page content -->
-    </div>
-  </section>
 
   <!-- Page footer -->
   <!-- https://bulma.io/documentation/layout/footer/ -->
