@@ -101,7 +101,7 @@
         <ol>
           <li><strong>Operating Airline:</strong> A categorical variable. A list of top 7 airlines held most passengers in June 2019.</li>
 
-          <li><strong>Passenger Count:</strong> A quantitative discrete variable, representing number of passengers. In range of 2093 to 52176</li>
+          <li><strong>Passenger Count:</strong> A quantitative discrete variable, representing number of passengers. In range of 2093 to 52176.</li>
 
         </ol>
 
@@ -129,6 +129,11 @@
           .append("g")
             .attr("transform",
                   "translate(" + margin.left + "," + margin.top + ")");
+
+          var colorScale = d3.scaleOrdinal()
+              .domain(data)
+              .range(["#095795", "#EE88A4", "#85603B", "#4CCCAB", "#0D781C", "#DAD25C", "#986D9E"])
+
 
         // Parse the Data
         d3.csv("ATPS-gn1-acj.csv", function(data) {
@@ -172,26 +177,26 @@
             .attr("y", function(d) { return y(d.OperatingAirline)+10; })
             .attr("width", function(d) { return x(d.PassengerCount); })
             .attr("height", y.bandwidth() - 20 )
-            .attr("fill", "#1C6995");
+            .attr("fill", function (d){ return colorScale(d['OperatingAirline']); });
 
           svg.append('text')
             .attr('class', 'axis-title')
             .attr('x', -160)
             .text('Operating Airline');
         })
-//TODO : color and legend!
+//TODO : legend!
 //TODO : captions...
         </script></h3>
 
         <h3>Instructions</h3>
-        <p>The Y-axis represents different airlines and X-axis represents passenger count. The passenger count is encoded by the length of the bar, so longer bars represent higher passenger count. The sequence of Y-axis is based on alphabetic.</p>
+        <p>The Y-axis represents different airlines and X-axis represents passenger count. The passenger count is encoded by the length of the bar, so longer bars represent higher passenger count. The sequence of Y-axis is alphabetic.</p>
 
         <h3>Discussion</h3>
         <h4 id="wrangling">Wrangling</h4>
         <p> The dataset was chosen in range of 201906 in Activity Period for fetching data for June 2019. Also after sorting Descendingly, only top 7 of row were chosen. The data filtering was done in the website interface of original dataset.</p>
 
-        <h4 id="wrangling">Conclusion</h4>
-        <p> There are several international airlines in the top 7 of airlines that held most passengers in June 2019. This shows that SFO is an airport that considerably active in cooperation with international airlines. Also the high volume of international flight could due to summer vacation. It worths further reserach on the trend of airlines and flights in SFO during different period of time.</p>
+        <h4 id="conclusion">Conclusion</h4>
+        <p> There are several international airlines in the top 7 of airlines that held most passengers in June 2019. This shows that SFO is an airport that considerably active in cooperation with international airlines. Also the high volume of international flight could due to summer vacation. It worths further reserach on the trend of airlines and flights in SFO during different/other period of time.</p>
 
         <span class="heading">Acknowledgements</span>
 

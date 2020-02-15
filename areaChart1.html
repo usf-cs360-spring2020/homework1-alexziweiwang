@@ -4,13 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <title>Area Chart</title>
+    <title>Area Chart: Passenger count during January to September in 2019</title>
 
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-
     <!-- Load Font Awesome 5 (free) icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
@@ -22,9 +20,8 @@
   <section class="hero is-primary is-bold">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">Area Chart</h1>
-        <!-- TODO: Change subtitle -->
-        <h2 class="subtitle">Website Subtitle</h2>
+        <h1 class="title">Area Chart: Passenger count during January to September in 2019</h1>
+        <h2 class="subtitle">prototype + d3 drawing</h2>
       </div>
     </div>
   </section>
@@ -35,8 +32,7 @@
   <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <!-- TODO: Change link to repository homepage if needed -->
-        <!-- TODO: Change which navbar-item is-active if needed -->
+
         <a class="navbar-item is-active" href="index.html">
           <span class="icon"><i class="fas fa-home"></i></span>
           <span>Home</span>
@@ -57,45 +53,30 @@
             <span>Data</span>
           </a>
 
-          <!-- TODO: Modify or remove dropdown -->
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               Visualizations
             </a>
 
+
             <div class="navbar-dropdown">
-
               <a class="navbar-item" href="barChart1.html">
-
                 <span>Bar Chart</span>
               </a>
               <a class="navbar-item" href="heatMap1.html">
-
-                <span>Heat Maps</span>
+                <span>Heat Map</span>
               </a>
               <a class="navbar-item" href="areaChart1.html">
-
                 <span>Area Chart</span>
               </a>
 
 
             </div>
+
           </div>
         </div>
 
         <!-- Right navbar items -->
-        <div class="navbar-end">
-          <!-- TODO: Update as needed -->
-          <a class="navbar-item" href="#about" title="About">
-            <span class="icon"><i class="fas fa-tasks"></i></span>
-            <span>Grade</span>
-          </a>
-
-          <a class="navbar-item" href="#about" title="About">
-            <span class="icon"><i class="fas fa-info-circle"></i></span>
-            <span>About</span>
-          </a>
-        </div>
       </div>
     </div>
   </nav>
@@ -106,67 +87,35 @@
       <!-- Begin page content -->
       <div class="content">
         <h1 class="title">
-          <!-- TODO: Change page title -->
-          Page Title
+          Area Chart
         </h1>
         <p class="subtitle">
-          <!-- TODO: Change page subtitle -->
-          Page Subtitle
+          Passenger count during January to September in 2019
         </p>
 
-        <p>This would be an excellent place to describe what this page is for, what to find in different sections, describe any motivation or theme behind your visualizations, and so on.</p>
+        <p>This visualization shows passenger count during January to September in 2019 in SFO.</p>
 
-        <p>You should not use this template unless you intend to customize it. Make it your own. Keep in mind this simple template is over 300 lines! You can see other examples of websites using Bulma at their showcase: <a href="https://bulma.io/expo/">bulma.io/expo/</a>.</p>
 
         <h2 id="data">Data</h2>
 
-        <p>Include some detailed information about the dataset here. You should <a href="#">add a link</a> to the original dataset. You might also want to quote the license:</p>
-
-        <blockquote>
-          <p>
-            "This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://www.opendatacommons.org/licenses/pddl/1.0/">www.opendatacommons.org/licenses/pddl/1.0/</a>"
-          </p>
-          <cite>Put a citation here, possibly link to the dataset license information directly.</cite>
-        </blockquote>
-
-        <p>In addition to including a link to the source and license, you should describe the data. You might want a list of some sort to enumerate the different types of columns:</p>
-
         <ol>
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Passenger Count:</strong> A quantitative discrete variable, representing number of passengers. In range of 2093 to 52176.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Activity Period:</strong> A categorical variable, represents the month in 2019. In range of 01 to 09 in this visualization.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
-
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
         </ol>
 
-        <p>This will of course differ depending on the assignment and data.</p>
+        <h3>Prototype:</h3>
+        <img src="hw1-gn5-mco.png" width="960" height="500">
 
-        <h3 id="wrangling">Wrangling</h3>
-
-        <p>Perhaps you had to do some data wrangling to the original dataset to prepare it for visualization. This would be a great place to discuss some of that wrangling.
-
-        <pre>
-You can even put code into these pre blocks.
-  It will preserve whitespace.
-    That is helpful for formatted code.
-        </pre>
-
-        <p>You can alternatively embed a Gist if you want. There is an "embed" button on <a href="https://gist.github.com/octocat/6cad326836d38bd3a7ae">the Gist page</a> and results in something like this:</p>
-
-
-        <h2 id="visualizations">Visualizations</h2>
-
-
-
+        <h3>d3.js version:
 
         <script src="https://d3js.org/d3.v4.js"></script>
 
         <div id="d3area1"></div>
 
         <script>
-//'#ff7f00', '#377eb8',
+
         // set the dimensions and margins of the graph
         var margin = {top: 10, right: 30, bottom: 30, left: 100},
             width = 960 - margin.left - margin.right,
@@ -185,7 +134,7 @@ You can even put code into these pre blocks.
         d3.csv("ATPS-gn5-mco.csv",
 
         function(data) {
-          
+
             let sortColumn = 'ActivityPeriod';
             data = data.sort(function(a, b) {
               return d3.ascending(a[sortColumn], b[sortColumn]);
@@ -201,7 +150,16 @@ You can even put code into these pre blocks.
 
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
+            .attr('y', + 370)
             .call(d3.axisBottom(x).ticks(5));
+
+            svg.append('text')
+              .attr('class', 'axis-title')
+              .attr('x', + 330)
+              .attr('y', + 485)
+              .text('Activity Period');
+
+
 
           // Add Y axis
           var y = d3.scaleLinear()
@@ -209,6 +167,13 @@ You can even put code into these pre blocks.
             .range([ height, 0 ]);
           svg.append("g")
             .call(d3.axisLeft(y));
+
+            svg.append('text')
+              .attr('class', 'axis-title')
+              .attr('x', -330)
+              .attr('y',  -60)
+              .attr('transform', 'rotate(-90)')
+              .text('Passenger Count');
 
           console.log("after adding axis..");
 
@@ -225,32 +190,20 @@ You can even put code into these pre blocks.
           )
 
         })
+        //TODO : color and legend!
+        //TODO : captions...
 
+        </script></h3>
 
-        </script>
+        <h3>Instructions</h3>
+        <p>The Y-axis represents passenger count and X-axis represents activity period. The passenger count is encoded by the height of the area, so higher positions represent higher passenger count. The sequence of X-axis is chronological.</p>
 
+        <h3>Discussion</h3>
+        <h4 id="wrangling">Wrangling</h4>
+        <p> The dataset was chosen in range of greater than 201812 in Activity Period for fetching data for year of 2019. Filtering was applied on the website interface of original dataset.</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <h4>Instructions</h4>
-
-        <p>You will likely need to include instructions on how to interpet and use the visualization. In the case above, if you click the three dots <i class="fas fa-ellipsis-h has-text-grey-light	"></i> above it will open a menu where you can either save the visualization to a SVG or PNG, or alternatively open it up in the online Vega Editor.</p>
-
-        <h4>Discussion</h4>
-
-        <p>You may also need other sections, like a discussion section, per-visualization section on data wrangling, and others. Because of the extra content and code visualizations take, it might be worthwhile to break up your pages into one home page and then one page per visualization.</p>
+        <h4 id="conclusion">Conclusion</h4>
+        <p> The volume of passenger is increasing from Feburary to August, and reached the max in August. There is possibility that activities of traveling by flights differs among months, or potentially among seasons, but it worths further studies.</p>
 
         <span class="heading">Acknowledgements</span>
 
