@@ -117,7 +117,7 @@
         <script>
 
         // set the dimensions and margins of the graph
-        var margin = {top: 20, right: 30, bottom: 100, left: 180},
+        var margin = {top: 20, right: 30, bottom: 120, left: 180},
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
@@ -147,6 +147,9 @@
             .domain([0, 50000])
             .range([ 0, width]);
 
+
+
+
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x))
@@ -156,7 +159,7 @@
           svg.append('text')
             .attr('class', 'axis-title')
             .attr('x', + 280)
-            .attr('y', + 425)
+            .attr('y', + 400)
             .text('Passenger Count');
 
           // Y axis
@@ -183,10 +186,22 @@
             .attr('class', 'axis-title')
             .attr('x', -160)
             .text('Operating Airline');
+
+            svg.append('text')
+              .attr('y', + 460)
+              .attr('x', -160)
+              .text('by Alex Wang');
+
+
+
+
+
         })
 //TODO : legend!
-//TODO : captions...
+
         </script></h3>
+<h3>Source : <a href="https://data.sfgov.org/Transportation/Air-Traffic-Passenger-Statistics/rkru-6vcg/data">
+Sum of Passenger Count for each Operating Airline.  Color shows details about Operating Airline.</h3>
 
         <h3>Instructions</h3>
         <p>The Y-axis represents different airlines and X-axis represents passenger count. The passenger count is encoded by the length of the bar, so longer bars represent higher passenger count. The sequence of Y-axis is alphabetic.</p>
