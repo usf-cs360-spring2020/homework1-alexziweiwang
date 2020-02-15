@@ -150,6 +150,12 @@
               .domain(d3.extent(data, function(d) { return d.ActivityPeriod; }))
               .range([ 0, width ]);
 
+              svg.append('text')
+                .attr('class', 'axis-title')
+                .attr('x', -180)
+                .attr('y', -3)
+                .text('Passenger count during January to September in 2019');
+
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .attr('y', + 370)

@@ -135,6 +135,11 @@
               .range(["#095795", "#EE88A4", "#85603B", "#4CCCAB", "#0D781C", "#DAD25C", "#986D9E"])
 
 
+svg.append('text')
+  .attr('class', 'axis-title')
+  .attr('x', 80)
+  .text('Passenger Count in June 2019 for 7 airlines held most passengers');
+
         // Parse the Data
         d3.csv("ATPS-gn1-acj.csv", function(data) {
           let sortColumn = 'OperatingAirline';
