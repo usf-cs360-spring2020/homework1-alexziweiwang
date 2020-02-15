@@ -4,13 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>Bar Chart: Airlines in June 2019</title>
 
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-
     <!-- Load Font Awesome 5 (free) icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
@@ -22,9 +20,8 @@
   <section class="hero is-primary is-bold">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">Bar Chart: Passenger Count in June 2019 for airlines held most passengers</h1>
-        <!-- TODO: Change subtitle -->
-        <h2 class="subtitle">Website Subtitle</h2>
+        <h1 class="title">Bar Chart: Passenger Count in June 2019 for 7 airlines held most passengers</h1>
+        <h2 class="subtitle">prototype + d3 drawing</h2>
       </div>
     </div>
   </section>
@@ -35,8 +32,7 @@
   <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <!-- TODO: Change link to repository homepage if needed -->
-        <!-- TODO: Change which navbar-item is-active if needed -->
+
         <a class="navbar-item is-active" href="index.html">
           <span class="icon"><i class="fas fa-home"></i></span>
           <span>Home</span>
@@ -57,7 +53,6 @@
             <span>Data</span>
           </a>
 
-          <!-- TODO: Modify or remove dropdown -->
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               Visualizations
@@ -65,17 +60,13 @@
 
 
             <div class="navbar-dropdown">
-
               <a class="navbar-item" href="barChart1.html">
-
                 <span>Bar Chart</span>
               </a>
               <a class="navbar-item" href="heatMap1.html">
-
                 <span>Heat Map</span>
               </a>
               <a class="navbar-item" href="areaChart1.html">
-
                 <span>Area Chart</span>
               </a>
 
@@ -86,18 +77,6 @@
         </div>
 
         <!-- Right navbar items -->
-        <div class="navbar-end">
-          <!-- TODO: Update as needed -->
-          <a class="navbar-item" href="#about" title="About">
-            <span class="icon"><i class="fas fa-tasks"></i></span>
-            <span>Grade</span>
-          </a>
-
-          <a class="navbar-item" href="#about" title="About">
-            <span class="icon"><i class="fas fa-info-circle"></i></span>
-            <span>About</span>
-          </a>
-        </div>
       </div>
     </div>
   </nav>
@@ -108,71 +87,37 @@
       <!-- Begin page content -->
       <div class="content">
         <h1 class="title">
-          <!-- TODO: Change page title -->
-          Page Title
+          Passenger Count in June 2019 for 7 airlines held most passengers
         </h1>
         <p class="subtitle">
-          <!-- TODO: Change page subtitle -->
-          Page Subtitle
+          Bar Chart
         </p>
 
-        <p>This would be an excellent place to describe what this page is for, what to find in different sections, describe any motivation or theme behind your visualizations, and so on.</p>
-
-        <p>You should not use this template unless you intend to customize it. Make it your own. Keep in mind this simple template is over 300 lines! You can see other examples of websites using Bulma at their showcase: <a href="https://bulma.io/expo/">bulma.io/expo/</a>.</p>
+        <p> This visualization shows the passenger count of top 7 airlines which held most passengers during June 2019 in SFO.</p>
 
         <h2 id="data">Data</h2>
 
-        <p>Include some detailed information about the dataset here. You should <a href="#">add a link</a> to the original dataset. You might also want to quote the license:</p>
-
-        <blockquote>
-          <p>
-            "This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://www.opendatacommons.org/licenses/pddl/1.0/">www.opendatacommons.org/licenses/pddl/1.0/</a>"
-          </p>
-          <cite>Put a citation here, possibly link to the dataset license information directly.</cite>
-        </blockquote>
-
-        <p>In addition to including a link to the source and license, you should describe the data. You might want a list of some sort to enumerate the different types of columns:</p>
 
         <ol>
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Operating Airline:</strong> A categorical variable. A list of top 7 airlines held most passengers in June 2019.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Passenger Count:</strong> A quantitative discrete variable, representing number of passengers. In range of 2093 to 52176</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
-
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
         </ol>
-
-        <p>This will of course differ depending on the assignment and data.</p>
-
-        <h3 id="wrangling">Wrangling</h3>
-
-        <p>Perhaps you had to do some data wrangling to the original dataset to prepare it for visualization. This would be a great place to discuss some of that wrangling.
-
-        <pre>
-You can even put code into these pre blocks.
-  It will preserve whitespace.
-    That is helpful for formatted code.
-        </pre>
-
-        <p>You can alternatively embed a Gist if you want. There is an "embed" button on <a href="https://gist.github.com/octocat/6cad326836d38bd3a7ae">the Gist page</a> and results in something like this:</p>
-
-        <script src="https://gist.github.com/octocat/6cad326836d38bd3a7ae.js"></script>
 
         <h2 id="visualizations">Visualizations</h2>
 
+        <h3>Prototype:</h3>
+        <img src="hw1-gn1-acj.png" width="960" height="500">
 
+        <h3>d3.js version:
         <!-- Load d3.js -->
         <script src="https://d3js.org/d3.v4.js"></script>
-
-        <!-- Create a div where the graph will take place -->
         <div id="d3bar1"></div>
-
         <script>
 
-
         // set the dimensions and margins of the graph
-        var margin = {top: 20, right: 30, bottom: 40, left: 120},
+        var margin = {top: 20, right: 30, bottom: 100, left: 180},
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
@@ -187,7 +132,6 @@ You can even put code into these pre blocks.
 
         // Parse the Data
         d3.csv("ATPS-gn1-acj.csv", function(data) {
-
           let sortColumn = 'OperatingAirline';
           data = data.sort(function(a, b) {
             return d3.ascending(a[sortColumn], b[sortColumn]);
@@ -202,14 +146,20 @@ You can even put code into these pre blocks.
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x))
             .selectAll("text")
-              .style("text-anchor", "end");
+            .style("text-anchor", "end");
+
+          svg.append('text')
+            .attr('class', 'axis-title')
+            .attr('x', + 280)
+            .attr('y', + 425)
+            .text('Passenger Count');
 
           // Y axis
          var y = d3.scaleBand()
             .range([ 0, height ])
             .domain(data.map(function(d) { return d.OperatingAirline; }))
             .padding(.05);
-          svg.append("g")
+        svg.append("g")
             .call(d3.axisLeft(y))
 
 
@@ -219,21 +169,29 @@ You can even put code into these pre blocks.
             .enter()
             .append("rect")
             .attr("x", x(0) + 1.1 )
-            .attr("y", function(d) { return y(d.OperatingAirline); })
+            .attr("y", function(d) { return y(d.OperatingAirline)+10; })
             .attr("width", function(d) { return x(d.PassengerCount); })
             .attr("height", y.bandwidth() - 20 )
             .attr("fill", "#1C6995");
+
+          svg.append('text')
+            .attr('class', 'axis-title')
+            .attr('x', -160)
+            .text('Operating Airline');
         })
+//TODO : color and legend!
+//TODO : captions...
+        </script></h3>
 
-        </script>
+        <h3>Instructions</h3>
+        <p>The Y-axis represents different airlines and X-axis represents passenger count. The passenger count is encoded by the length of the bar, so longer bars represent higher passenger count. The sequence of Y-axis is based on alphabetic.</p>
 
-        <h4>Instructions</h4>
+        <h3>Discussion</h3>
+        <h4 id="wrangling">Wrangling</h4>
+        <p> The dataset was chosen in range of 201906 in Activity Period for fetching data for June 2019. Also after sorting Descendingly, only top 7 of row were chosen. The data filtering was done in the website interface of original dataset.</p>
 
-        <p>You will likely need to include instructions on how to interpet and use the visualization. In the case above, if you click the three dots <i class="fas fa-ellipsis-h has-text-grey-light	"></i> above it will open a menu where you can either save the visualization to a SVG or PNG, or alternatively open it up in the online Vega Editor.</p>
-
-        <h4>Discussion</h4>
-
-        <p>You may also need other sections, like a discussion section, per-visualization section on data wrangling, and others. Because of the extra content and code visualizations take, it might be worthwhile to break up your pages into one home page and then one page per visualization.</p>
+        <h4 id="wrangling">Conclusion</h4>
+        <p> There are several international airlines in the top 7 of airlines that held most passengers in June 2019. This shows that SFO is an airport that considerably active in cooperation with international airlines. Also the high volume of international flight could due to summer vacation. It worths further reserach on the trend of airlines and flights in SFO during different period of time.</p>
 
         <span class="heading">Acknowledgements</span>
 
@@ -259,8 +217,7 @@ You can even put code into these pre blocks.
       </p>
 
       <p>
-        <!-- TODO: Change to link to your Github repository -->
-        <a href="https://github.com/usf-cs360-spring2020/template-bulma" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
+        <a href="https://github.com/usf-cs360-spring2020/homework1-alexziweiwang" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
           <i class="fab fa-github-alt"></i>&nbsp;<strong>Github</strong>
         </a>
 
