@@ -182,75 +182,47 @@ You can even put code into these pre blocks.
                   "translate(" + margin.left + "," + margin.top + ")");
 
         //Read the data
-        d3.csv("ATPS-gn3-mci3.csv",
-        function(d){
-          return { date : d3.timeParse("%Y%m")(d.ActivityPeriod), value : d.value }
-        },
+        d3.csv("ATPS-gn5-mco.csv",
 
         function(data) {
-
-          // group the data: one array for each value of the Y axis.
-/*          var sumstat = d3.nest()
-            .key(function(d) { return d.ActivityPeriod;})
-            .entries(data);
-            console.log("sumstat: " + sumstat.details);
-*/
-          // Stack the data: each group will be represented on top of each other
-/*          var mygroups = ["Domestic", "International"] // list of group names
-          var mygroup = [1,2] // list of group names
-          var stackedData = d3.stack()
-            .keys(mygroup)
-            .value(function(d, key){
-              console.log("d.values: " + d.values[key]);
-              console.log("key: " + key);
-          })
-          (sumstat)
-
-          // color palette
-          var color = d3.scaleOrdinal()
-            .domain(mygroups)
-            .range(['#ff7f00','#377eb8'])
-
+          
+            let sortColumn = 'ActivityPeriod';
+            data = data.sort(function(a, b) {
+              return d3.ascending(a[sortColumn], b[sortColumn]);
+            });
+            console.log(data);
 
           console.log("before drawing area chart...");
 
-          // Add X axis --> it is a date format
+          // Add X axis
             var x = d3.scaleTime()
-              .domain(d3.extent(data, function(d) { return d.date; }))
+              .domain(d3.extent(data, function(d) { return d.ActivityPeriod; }))
               .range([ 0, width ]);
 
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x).ticks(5));
 
-
           // Add Y axis
           var y = d3.scaleLinear()
-            .domain([0, 600000])
+            .domain([0, d3.max(data, function(d) { return d.PassengerCount; })])
             .range([ height, 0 ]);
           svg.append("g")
             .call(d3.axisLeft(y));
 
-
           console.log("after adding axis..");
 
-
-
-
-          // Show the areas
-/*          svg
-            .selectAll("mylayers")
-            .data(stackedData)
-            .enter()
-            .append("path")
-              .style("fill", function(d) { console.log(d.key) ; return color(d.key); })
-              .attr("d", d3.area()
-                .x(function(d, i) { return x(d.data.key); })
-                .y0(function(d) { return y(d[0]); })
-                .y1(function(d) { return y(d[1]); })
-            )
-
-*/
+          // Add the area
+          svg.append("path")
+            .datum(data)
+            .attr("x", x(0) + 5 )
+            .attr("y", y(0) + 1.1)
+            .attr("fill", "#377eb8")
+            .attr("d", d3.area()
+              .x(function(d) { return x(d.ActivityPeriod) })
+              .y0(y(0))
+              .y1(function(d) { return y(+d.PassengerCount) })
+          )
 
         })
 

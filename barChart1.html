@@ -185,10 +185,6 @@ You can even put code into these pre blocks.
             .attr("transform",
                   "translate(" + margin.left + "," + margin.top + ")");
 
-
-
-
-
         // Parse the Data
         d3.csv("ATPS-gn1-acj.csv", function(data) {
 
@@ -197,23 +193,16 @@ You can even put code into these pre blocks.
             return d3.ascending(a[sortColumn], b[sortColumn]);
           });
 
-
-
-
-
           // Add X axis
           var x = d3.scaleLinear()
             .domain([0, 50000])
             .range([ 0, width]);
-
 
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x))
             .selectAll("text")
               .style("text-anchor", "end");
-
-
 
           // Y axis
          var y = d3.scaleBand()

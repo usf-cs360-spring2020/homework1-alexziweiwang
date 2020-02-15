@@ -166,7 +166,7 @@ You can even put code into these pre blocks.
         <script src="https://d3js.org/d3.v4.js"></script>
 
         <!-- Create a div where the graph will take place -->
-        <div id="d3bar1"></div>
+        <div id="d3pie1"></div>
 
         <script>
 
@@ -177,7 +177,7 @@ You can even put code into these pre blocks.
             height = 500 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
-        var svg = d3.select("#d3bar1")
+        var svg = d3.select("#d3pie1")
           .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -201,7 +201,7 @@ You can even put code into these pre blocks.
                                 return d3.ascending(a[sortColumn], b[sortColumn]);
                               });
 
-                              let regions = data.map(row => row['GEORegion']);
+                      //        let regions = data.map(row => row['GEORegion']);
                               console.log(regions);
 
                               let dates = data.map(row => row['ActivityPeriod']);
@@ -210,10 +210,12 @@ You can even put code into these pre blocks.
                               let pCount = data.map(row => row['PassengerCount']);
                               console.log(pCount);
 
-                              scale.x.domain(dates);
-                              scale.y.domain(regions);
+
 });
-                              </script>
+//        let regions = data.map(row => row['GEORegion']);
+
+
+        </script>
 
         <h4>Instructions</h4>
 
