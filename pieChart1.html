@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>Heat Map</title>
+    <title>Pie Chart</title>
 
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
@@ -22,8 +22,7 @@
   <section class="hero is-primary is-bold">
     <div class="hero-body">
       <div class="container">
-        <!-- TODO: Change title -->
-        <h1 class="title">Heat Map</h1>
+        <h1 class="title">Pie Chart</h1>
         <!-- TODO: Change subtitle -->
         <h2 class="subtitle">Website Subtitle</h2>
       </div>
@@ -64,6 +63,7 @@
               Visualizations
             </a>
 
+
             <div class="navbar-dropdown">
 
               <a class="navbar-item" href="barChart1.html">
@@ -81,6 +81,7 @@
 
 
             </div>
+
           </div>
         </div>
 
@@ -156,143 +157,65 @@ You can even put code into these pre blocks.
 
         <p>You can alternatively embed a Gist if you want. There is an "embed" button on <a href="https://gist.github.com/octocat/6cad326836d38bd3a7ae">the Gist page</a> and results in something like this:</p>
 
+        <script src="https://gist.github.com/octocat/6cad326836d38bd3a7ae.js"></script>
+
         <h2 id="visualizations">Visualizations</h2>
-        <meta charset="utf-8">
+
+
+        <!-- Load d3.js -->
         <script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.js"></script>
-        <div id="d3pheat1"></div>
 
-
+        <!-- Create a div where the graph will take place -->
+        <div id="d3bar1"></div>
 
         <script>
 
 
+        // set the dimensions and margins of the graph
+        var margin = {top: 20, right: 30, bottom: 40, left: 120},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
-
-        var margin = {top: 30, right: 30, bottom: 30, left: 100},
-          width = 960 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom;
-
-          var svg = d3.select("#d3pheat1")
-            .append("svg")
+        // append the svg object to the body of the page
+        var svg = d3.select("#d3bar1")
+          .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-            .append("g")
+          .append("g")
             .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
-
-          var regionArr=[];
-          var timeArr=[];
-
-          let config = {
-            'svg': {},
-            'margin': {},
-            'plot': {}
-          };
-
-
-          let scale = {};
-
-          scale.x = d3.scaleBand();
-          scale.x.range([0, width]);
-
-          scale.y = d3.scaleBand();
-          scale.y.range([height, 0]);
-
-          // https://github.com/d3/d3-scale-chromatic
-          scale.color = d3.scaleSequential(d3.interpolateGnBu);
-
-          var colors = d3.scaleSequential(d3.interpolateGnBu);
-
-          let axis = {};
-          axis.x = d3.axisBottom(scale.x);
-          axis.x.tickPadding(0);
-
-          axis.y = d3.axisLeft(scale.y);
-          axis.y.tickPadding(0);
-
-
-          d3.csv("ATPS-gn2-rmc.csv",function(data){
-
-                      let sortRow = 'GEORegion';
-                      data = data.sort(function(a, b) {
-                        return d3.descending(a[sortRow], b[sortRow]);
-                      });
-
-                      let sortColumn = 'ActivityPeriod';
-                      data = data.sort(function(a, b) {
-                        return d3.ascending(a[sortColumn], b[sortColumn]);
-                      });
-
-                      let regions = data.map(row => row['GEORegion']);
-                      console.log(regions);
-
-                      let dates = data.map(row => row['ActivityPeriod']);
-                      console.log(dates);
-
-                      let pCount = data.map(row => row['PassengerCount']);
-                      console.log(pCount);
-
-                      scale.x.domain(dates);
-                      scale.y.domain(regions);
-
-                      // draw the x and y axis
-                      let gx = svg.append("g");
-                      gx.attr("id", "x-axis");
-                      gx.attr("class", "axis");
-                      gx.call(axis.x);
-
-                      let gy = svg.append("g");
-                      gy.attr("id", "y-axis");
-                      gy.attr("class", "axis");
-                      gy.call(axis.y);
-
-
-                      // get all of the value objects (with date and value) from the rows
-                      let values = data.map(d => d.PassengerCount);
-
-                      // combine all of the individual object arrays into one
-                      let merged = d3.merge(values);
-
-                      // get only the value part of the objects
-                      let mapped = merged.map(d => d.PassengerCount);
-
-                      console.log("111");
-
-                      svg.selectAll()
-      .data(data, function(d) {return d.group+':'+d.variable;})
-      .enter()
-      .append("rect")
-      .attr("x", function(d) { return x(d.group) })
-      .attr("y", function(d) { return y(d.variable) })
-      .attr("width", x.bandwidth() )
-      .attr("height", y.bandwidth() )
-      .style("fill", function(d) { return myColor(d.value)} )
+                  "translate(" + margin.left + "," + margin.top + ")");
 
 
 
 
 
-          });
+                  d3.csv("ATPS-gn2-rmc.csv",function(data){
 
+                              let sortRow = 'GEORegion';
+                              data = data.sort(function(a, b) {
+                                return d3.descending(a[sortRow], b[sortRow]);
+                              });
 
+                              let sortColumn = 'ActivityPeriod';
+                              data = data.sort(function(a, b) {
+                                return d3.ascending(a[sortColumn], b[sortColumn]);
+                              });
 
+                              let regions = data.map(row => row['GEORegion']);
+                              console.log(regions);
 
+                              let dates = data.map(row => row['ActivityPeriod']);
+                              console.log(dates);
 
+                              let pCount = data.map(row => row['PassengerCount']);
+                              console.log(pCount);
 
+                              scale.x.domain(dates);
+                              scale.y.domain(regions);
+});
+                              </script>
 
-
-
-
-
-
-
-
-
-</script>
-
-
-<h4>Instructions</h4>
+        <h4>Instructions</h4>
 
         <p>You will likely need to include instructions on how to interpet and use the visualization. In the case above, if you click the three dots <i class="fas fa-ellipsis-h has-text-grey-light	"></i> above it will open a menu where you can either save the visualization to a SVG or PNG, or alternatively open it up in the online Vega Editor.</p>
 
@@ -311,60 +234,55 @@ You can even put code into these pre blocks.
           <em>Thanks to Person Name for their suggestion to do something with the visualization.</em>
         </p>
 
-          <!-- Page footer -->
-          <!-- https://bulma.io/documentation/layout/footer/ -->
-          <footer class="footer">
-            <div class="content has-text-centered is-size-7">
-              <p>
-                <a href="#top">
-                  <span class="fas fa-arrow-up"></span>
-                  <span class="has-text-weight-medium">Back to Top</span>
-                </a>
-              </p>
 
-              <p>
-                <!-- TODO: Change to link to your Github repository -->
-                <a href="https://github.com/usf-cs360-spring2020/template-bulma" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
-                  <i class="fab fa-github-alt"></i>&nbsp;<strong>Github</strong>
-                </a>
+  <!-- Page footer -->
+  <!-- https://bulma.io/documentation/layout/footer/ -->
+  <footer class="footer">
+    <div class="content has-text-centered is-size-7">
+      <p>
+        <a href="#top">
+          <span class="fas fa-arrow-up"></span>
+          <span class="has-text-weight-medium">Back to Top</span>
+        </a>
+      </p>
 
-                <a href="https://fontawesome.com/" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
-                  <i class="fab fa-font-awesome"></i>&nbsp;<strong>FontAwesome</strong>
-                </a>
+      <p>
+        <!-- TODO: Change to link to your Github repository -->
+        <a href="https://github.com/usf-cs360-spring2020/template-bulma" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
+          <i class="fab fa-github-alt"></i>&nbsp;<strong>Github</strong>
+        </a>
 
-                <a href="https://bulma.io" class="button is-small">
-                  <img src="https://bulma.io/images/made-with-bulma--semiblack.png" alt="Made with Bulma" width="128" height="24">
-                </a>
-              </p>
-            </div>
-          </footer>
-          <!-- End page footer -->
+        <a href="https://fontawesome.com/" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
+          <i class="fab fa-font-awesome"></i>&nbsp;<strong>FontAwesome</strong>
+        </a>
 
-          <!-- Mobile menu responsiveness -->
-          <!-- https://bulma.io/documentation/components/navbar/ -->
-          <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        <a href="https://bulma.io" class="button is-small">
+          <img src="https://bulma.io/images/made-with-bulma--semiblack.png" alt="Made with Bulma" width="128" height="24">
+        </a>
+      </p>
+    </div>
+  </footer>
+  <!-- End page footer -->
 
-            if ($navbarBurgers.length > 0) {
-              $navbarBurgers.forEach( el => {
-                el.addEventListener('click', () => {
-                  const target = el.dataset.target;
-                  const $target = document.getElementById(target);
-                  el.classList.toggle('is-active');
-                  $target.classList.toggle('is-active');
-                });
-              });
-            }
-          });
-          </script>
+  <!-- Mobile menu responsiveness -->
+  <!-- https://bulma.io/documentation/components/navbar/ -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-
+    if ($navbarBurgers.length > 0) {
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+  </script>
+  <!-- End mobile menu responsiveness -->
   </body>
-
-
-
-
-
 
 </html>
