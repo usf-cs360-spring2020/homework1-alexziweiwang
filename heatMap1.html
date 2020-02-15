@@ -4,13 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <title>Heat Map</title>
+    <title>Heat Map: Passenger count in various regions in 2019 Janurary to September</title>
 
     <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-
     <!-- Load Font Awesome 5 (free) icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
@@ -22,10 +20,8 @@
   <section class="hero is-primary is-bold">
     <div class="hero-body">
       <div class="container">
-        <!-- TODO: Change title -->
-        <h1 class="title">Heat Map</h1>
-        <!-- TODO: Change subtitle -->
-        <h2 class="subtitle">Website Subtitle</h2>
+        <h1 class="title">Heat Map: Passenger count from/to various regions in 2019 Janurary to September</h1>
+        <h2 class="subtitle">prototype</h2>
       </div>
     </div>
   </section>
@@ -36,8 +32,7 @@
   <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <!-- TODO: Change link to repository homepage if needed -->
-        <!-- TODO: Change which navbar-item is-active if needed -->
+
         <a class="navbar-item is-active" href="index.html">
           <span class="icon"><i class="fas fa-home"></i></span>
           <span>Home</span>
@@ -58,243 +53,72 @@
             <span>Data</span>
           </a>
 
-          <!-- TODO: Modify or remove dropdown -->
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               Visualizations
             </a>
 
+
             <div class="navbar-dropdown">
-
               <a class="navbar-item" href="barChart1.html">
-
                 <span>Bar Chart</span>
               </a>
               <a class="navbar-item" href="heatMap1.html">
-
                 <span>Heat Map</span>
               </a>
               <a class="navbar-item" href="areaChart1.html">
-
                 <span>Area Chart</span>
               </a>
 
 
             </div>
+
           </div>
         </div>
 
         <!-- Right navbar items -->
-        <div class="navbar-end">
-          <!-- TODO: Update as needed -->
-          <a class="navbar-item" href="#about" title="About">
-            <span class="icon"><i class="fas fa-tasks"></i></span>
-            <span>Grade</span>
-          </a>
-
-          <a class="navbar-item" href="#about" title="About">
-            <span class="icon"><i class="fas fa-info-circle"></i></span>
-            <span>About</span>
-          </a>
-        </div>
       </div>
     </div>
   </nav>
   <!-- End page navigation -->
+
 
   <section class="section">
     <div class="container">
       <!-- Begin page content -->
       <div class="content">
         <h1 class="title">
-          <!-- TODO: Change page title -->
-          Page Title
+          Passenger count in various regions in 2019 Janurary to September
         </h1>
         <p class="subtitle">
-          <!-- TODO: Change page subtitle -->
-          Page Subtitle
+          Heat Map
         </p>
 
-        <p>This would be an excellent place to describe what this page is for, what to find in different sections, describe any motivation or theme behind your visualizations, and so on.</p>
 
-        <p>You should not use this template unless you intend to customize it. Make it your own. Keep in mind this simple template is over 300 lines! You can see other examples of websites using Bulma at their showcase: <a href="https://bulma.io/expo/">bulma.io/expo/</a>.</p>
-
+        <p> This visualization shows pssenger count in various regions in 2019 Janurary to September in SFO.</p>
         <h2 id="data">Data</h2>
 
-        <p>Include some detailed information about the dataset here. You should <a href="#">add a link</a> to the original dataset. You might also want to quote the license:</p>
-
-        <blockquote>
-          <p>
-            "This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://www.opendatacommons.org/licenses/pddl/1.0/">www.opendatacommons.org/licenses/pddl/1.0/</a>"
-          </p>
-          <cite>Put a citation here, possibly link to the dataset license information directly.</cite>
-        </blockquote>
-
-        <p>In addition to including a link to the source and license, you should describe the data. You might want a list of some sort to enumerate the different types of columns:</p>
-
         <ol>
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>GEO Region:</strong> A categorical variable, represents the region of flights.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Activity Period:</strong> A categorical variable, represents the month in 2019. In range of 01 to 09 in this visualization.</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
+          <li><strong>Passenger Count:</strong> A quantitative discrete variable, representing number of passengers. In range of 27751 to 4228225</li>
 
-          <li><strong>Column Name:</strong> Give a description of the column, including its type and possible range of values.</li>
         </ol>
 
-        <p>This will of course differ depending on the assignment and data.</p>
-
-        <h3 id="wrangling">Wrangling</h3>
-
-        <p>Perhaps you had to do some data wrangling to the original dataset to prepare it for visualization. This would be a great place to discuss some of that wrangling.
-
-        <pre>
-You can even put code into these pre blocks.
-  It will preserve whitespace.
-    That is helpful for formatted code.
-        </pre>
-
-        <p>You can alternatively embed a Gist if you want. There is an "embed" button on <a href="https://gist.github.com/octocat/6cad326836d38bd3a7ae">the Gist page</a> and results in something like this:</p>
 
         <h2 id="visualizations">Visualizations</h2>
-        <meta charset="utf-8">
-        <script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.js"></script>
-        <div id="d3pheat1"></div>
 
+        <img src="hw1-gn2-rmc22222.png" width="960" height="500">
 
+        <h4>Instructions</h4>
 
-        <script>
+        <p>X-axis represents the Activity Period from January 2019 to September 2019. Y-axis represents regions. The stronger color represents more passenger count, vice versa.</p>
 
+        <h4 id="wrangling">Wrangling</h4>
 
-
-
-        var margin = {top: 30, right: 30, bottom: 30, left: 100},
-          width = 960 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom;
-
-          var svg = d3.select("#d3pheat1")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
-
-          var regionArr=[];
-          var timeArr=[];
-
-          let config = {
-            'svg': {},
-            'margin': {},
-            'plot': {}
-          };
-
-
-          let scale = {};
-
-          scale.x = d3.scaleBand();
-          scale.x.range([0, width]);
-
-          scale.y = d3.scaleBand();
-          scale.y.range([height, 0]);
-
-          // https://github.com/d3/d3-scale-chromatic
-          scale.color = d3.scaleSequential(d3.interpolateGnBu);
-
-          var colors = d3.scaleSequential(d3.interpolateGnBu);
-
-          let axis = {};
-          axis.x = d3.axisBottom(scale.x);
-          axis.x.tickPadding(0);
-
-          axis.y = d3.axisLeft(scale.y);
-          axis.y.tickPadding(0);
-
-
-          d3.csv("ATPS-gn2-rmc.csv",function(data){
-
-                      let sortRow = 'GEORegion';
-                      data = data.sort(function(a, b) {
-                        return d3.descending(a[sortRow], b[sortRow]);
-                      });
-
-                      let sortColumn = 'ActivityPeriod';
-                      data = data.sort(function(a, b) {
-                        return d3.ascending(a[sortColumn], b[sortColumn]);
-                      });
-
-                      let regions = data.map(row => row['GEORegion']);
-                      console.log(regions);
-
-                      let dates = data.map(row => row['ActivityPeriod']);
-                      console.log(dates);
-
-                      let pCount = data.map(row => row['PassengerCount']);
-                      console.log(pCount);
-
-                      scale.x.domain(dates);
-                      scale.y.domain(regions);
-
-                      // draw the x and y axis
-                      let gx = svg.append("g");
-                      gx.attr("id", "x-axis");
-                      gx.attr("class", "axis");
-                      gx.call(axis.x);
-
-                      let gy = svg.append("g");
-                      gy.attr("id", "y-axis");
-                      gy.attr("class", "axis");
-                      gy.call(axis.y);
-
-
-                      // get all of the value objects (with date and value) from the rows
-                      let values = data.map(d => d.PassengerCount);
-
-                      // combine all of the individual object arrays into one
-                      let merged = d3.merge(values);
-
-                      // get only the value part of the objects
-                      let mapped = merged.map(d => d.PassengerCount);
-
-                      console.log("111");
-
-                      svg.selectAll()
-      .data(data, function(d) {return +d.PassengerCount;})
-      .enter()
-      .append("rect")
-      .style("fill", function(d) { return colors(d.value)} )
-
-
-
-
-
-          });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
-
-
-<h4>Instructions</h4>
-
-        <p>You will likely need to include instructions on how to interpet and use the visualization. In the case above, if you click the three dots <i class="fas fa-ellipsis-h has-text-grey-light	"></i> above it will open a menu where you can either save the visualization to a SVG or PNG, or alternatively open it up in the online Vega Editor.</p>
-
-        <h4>Discussion</h4>
-
-        <p>You may also need other sections, like a discussion section, per-visualization section on data wrangling, and others. Because of the extra content and code visualizations take, it might be worthwhile to break up your pages into one home page and then one page per visualization.</p>
+        <p> This data is filtered by Activity Period greater than 201812 to choose data in 2019. Filtering applied on the website interface of orginal dataset.</p>
 
         <span class="heading">Acknowledgements</span>
 
